@@ -1,6 +1,7 @@
 let order = [];
 let clickedOrder = [];
 let score = 0;
+var pontuacao = document.querySelector('.pontuacao');
 
 const blue = document.querySelector('.blue');
 const red = document.querySelector('.red');
@@ -26,10 +27,10 @@ let lightColor = (element, number) => {
     number = number * 500;
     setTimeout(() => {
         element.classList.add('selected');
-    }, number - 250);
+    }, number - 500);
     setTimeout(() => {
         element.classList.remove('selected');
-    })
+    }, number - 250);
 }
 
 //checa se os botões clicados são os mesmos da ordem gerada no jogo
@@ -43,6 +44,9 @@ let checkOrder = () => {
     }
     if(clickedOrder.length == order.length) {
         alert(`Pontuação: ${score}\nVocê acertou! Iniciando próxima fase.`);
+        var currentScore = parseInt(pontuacao.innerText);
+        currentScore++;
+        pontuacao.innerText = currentScore;
         nextLevel();
     }
 }
@@ -80,17 +84,16 @@ let createColorElement = (color) => {
 
 let nextLevel = () => {
     score++;
-    shuffleOrder();
+    setTimeout(() => {
+        shuffleOrder();
+    }, 1000)
 }
 
 //função caso o jogador tenha perdido o jogo (GameOver)
 
 let gameOver = () => {
     alert(`Pontuação : ${score}\nVocê perdeu o jogo!\nClique em OK para iniciar um novo jogo.`);
-    order = [];
-    clickedOrder = [];
-
-    playGame();
+    window.location.reload();
 }
 
 //iniciar jogo
